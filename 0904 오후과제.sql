@@ -111,12 +111,12 @@ where c1.c_com is null;
 --users.name  carinfo.c_num  companycar.c_name
 --즉 테이블3개를 조인. 이때는 순서를 정하고 순서대로 2개씩 조인하고
 --그 결과의 논리테이블과 다음 테이블을 조인 .. 진행
-select u.name, NVL(c.c_num,'없음'), NVL(cc.c_name,'없음')
-from users u
+select n.name, NVL(c.c_num,'없음'), NVL(p.c_name,'없음')
+from nusers n
 left outer join carinfo c
-on u.id=c.id
-left outer join companycar cc
-on c.c_num= cc.c_num;
+on n.id=c.id
+left outer join companycar p
+on c.c_num= p.c_num;
 
 -- view는 실제 존재하는 테이블이 아니라, 실제 존재하는 테이블을 통하여 만든 가상테이블이다.
 -- 이러한 view는 view이름으로 조회가 가능하다.
