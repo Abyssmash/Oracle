@@ -118,3 +118,9 @@ on u.id=c.id
 left outer join companycar cc
 on c.c_num= cc.c_num;
 
+-- view는 실제 존재하는 테이블이 아니라, 실제 존재하는 테이블을 통하여 만든 가상테이블이다.
+-- 이러한 view는 view이름으로 조회가 가능하다.
+-- 이론적으로는 view를 통해서 insert, delete, update가 가능하지만,
+-- 테이블의 무결성 및 제약조건에 위배가 되지 않아야한다.
+-- 이런점에서, view는 조회목적으로 많이 사용한다.
+
