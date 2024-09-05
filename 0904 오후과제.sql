@@ -77,7 +77,44 @@ insert into companycar values ('9900','현다','그랭저',2100);
 select p.num 차번호, p.com 제조사, p.name 자동차명, p.price 가격 from companycar p
 inner join carinfo c on c.num=p.num;
 
---9. 회사에서구매는 하였지만 배정되지 않은 자동차의 차번호, 제조자, 자동차 이름을 출력   
+--9. 회사에서구매는 하였지만 배정되지 않은 자동차의 차번호, 제조자, 자동차 이름을 출력  
+
+--테이블을 보는 순서를 정해 봅시다.
+--companycar 테이블에 보유한 자동차 정보를 확인, 이 자동차 배정되었는지
+--확인하기 위해서 carinfo테이블 확인..  배정된 자동차는 이너조인
+--배정이 안된 자동차는 아우터 조인.. 이때 campanycar를 left
+select c.c_num, c.c_com, c.c_name
+from companycar c
+left outer join carinfo cc
+on c.c_num = cc.c_num
+where cc.c_num is null;
+
 --10. 자동차 가격이 1000만원 이상인 자동차의 자동차 번호를 출력하시오.
+--자동차 가격이 1000만원 이상이라는 조건은 companycar 에서 해결가능
+--원하는 자동차 번호도 companycar에서 해결가능 즉 조인 필요없음
+ select c_name
+ from companycar
+ where c_price >=1000;
+ 
 --11. 배정된 자동차 중에 회사에서 구매한 자동차가 아닌 자동차 번호를 출력하시오.
+--관련 테이블은 carinfo   companycar
+--outer join  >  carinfo 테이블을 left
+select c.c_num
+from carinfo c
+left outer join companycar c1
+on c.c_num = c1.c_num
+where c1.c_com is null;
+
 --12. 모든 사람의 정보를 출력하시오. 이름, 배정받은 자동차번호, 자동차이름
+--관련테이블은 users, carinfo, companycar
+--조인해서 만들고 싶은 테이블은
+--users.name  carinfo.c_num  companycar.c_name
+--즉 테이블3개를 조인. 이때는 순서를 정하고 순서대로 2개씩 조인하고
+--그 결과의 논리테이블과 다음 테이블을 조인 .. 진행
+select u.name, NVL(c.c_num,'없음'), NVL(cc.c_name,'없음')
+from users u
+left outer join carinfo c
+on u.id=c.id
+left outer join companycar cc
+on c.c_num= cc.c_num;
+
